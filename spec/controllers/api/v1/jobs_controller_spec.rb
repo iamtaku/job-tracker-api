@@ -1,17 +1,19 @@
-
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Jobs", type: :request do
-  describe "GET #index" do
+  describe "Jobs api" do
     before do
-      get :index
+      @job = Job.create!(company: 'plus', position: 'coder')
+      @step = Step.new(date: Date.today)
+      @step.job = @job
+      @step.save
     end
-    it "returns http success" do
-      expect(response).to have_http_status(:success)
-    end
-    it "JSON body response contains expected recipe attributes" do
-      json_response = JSON.parse(response.body)
-      expect(hash_body.keys).to match_array(["id","company","position","application_link","status","created_at","updated_at"])
+    it 'should return valid JSON for a job ' do
+      get '/api/v1/jobs'
+      json = JSON.parse(response.body)
+      p json[0]
+      expect(response.status).to eq(200)
+
     end
   end
 end
