@@ -23,6 +23,19 @@ describe "Jobs api", type: :request do
       # p JSON.parse(response.body)
     end
   end
+
+  describe 'DELETE /jobs'do
+    it 'delete a job' do
+       post '/api/v1/jobs', params: {job: {company: 'Google', position: 'frontend-dev', application_link: 'http://www.google.com'}}
+      #  test = JSON.parse(response.body)
+       id_to_check =  JSON.parse(response.body)['id']
+      #  p test
+      delete "/api/v1/jobs/#{id_to_check}"
+
+      expect(response).to have_http_status(:no_content)
+    end
+
+  end
   # it 'creates a job' do
 
 

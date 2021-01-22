@@ -13,6 +13,15 @@ class Api::V1::JobsController < ApplicationController
     end
   end
 
+  def destroy
+    job = Job.find(params[:id])
+    if job.destroy
+        head :no_content
+    else
+      render json: { error: job.errors.messages }, status: 422
+    end
+  end
+
   private
 
   def job_params
