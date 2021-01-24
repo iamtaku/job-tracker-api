@@ -32,21 +32,17 @@ describe "Jobs api", type: :request do
   describe 'PATCH /jobs/:id' do
     it 'updates a job' do
       post = FactoryBot.create(:job, company: 'plus company', application_link: 'http://www.google.com', position: 'coder')
-      p post
       patch "/api/v1/jobs/#{post.id}", params: {
         job: {
           company: 'wework',
-          application_link: 'http://www.google.com',
+          application_link: 'https://www.wantedly.com/companies/wework3',
           position: 'react dev'
         }
       }
 
       expect(response.status).to eq(200)
-      expect(response.body).to include('wework', 'react dev')
+      expect(response.body).to include('wework', 'react dev','https://www.wantedly.com/companies/wework3')
     end
 
   end
-
-
-  # end
 end
