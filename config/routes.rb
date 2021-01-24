@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       resources :jobs,only: [:index, :create, :update, :destroy] do
         resources :steps, only: [:create]
       end
-      resources :steps, only: [:destroy,:update]
+      resources :steps, only: [:destroy, :update, :show]
     end
   end
 
