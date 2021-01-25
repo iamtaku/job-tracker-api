@@ -1,7 +1,8 @@
 class Api::V1::JobsController < ApplicationController
   def index
     @jobs = Job.all
-    render json: @jobs, status: 200
+    # render json: @jobs, status: 200
+    render json: JobSerializer.new(@jobs).serializable_hash.to_json
   end
 
   def create
@@ -35,5 +36,9 @@ class Api::V1::JobsController < ApplicationController
 
   def job_params
     params.require(:job).permit(:company, :position, :date, :application_link)
+  end
+
+  def options
+    @options ||= { include: %i[steps] }
   end
 end

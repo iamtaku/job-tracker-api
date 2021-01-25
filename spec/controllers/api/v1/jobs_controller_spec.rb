@@ -7,7 +7,7 @@ describe "Jobs api", type: :request do
       FactoryBot.create(:job, company: 'money foward', application_link: 'http://www.google.com', position: 'react-dev')
       get '/api/v1/jobs'
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body).count).to eq(2)
+      expect(JSON.parse(response.body)["data"].count).to eq(2)
     end
   end
   describe "POST /jobs" do
