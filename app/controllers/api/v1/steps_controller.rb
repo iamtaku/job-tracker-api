@@ -9,7 +9,7 @@ class Api::V1::StepsController < ApplicationController
     job = Job.find(params[:job_id])
     step.job = job
     if step.save
-      render json: step, status: :created
+      render json: StepSerializer.new(step).serializable_hash.to_json
     else
       render json: { error: step.errors.messages }, status: 422
     end
