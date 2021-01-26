@@ -21,9 +21,8 @@ describe "Jobs api", type: :request do
 
   describe 'DELETE /jobs'do
     it 'delete a job' do
-      post '/api/v1/jobs', params: {job: {company: 'Google', position: 'frontend-dev', application_link: 'http://www.google.com'}}
-      id_to_check =  JSON.parse(response.body)['id']
-      delete "/api/v1/jobs/#{id_to_check}"
+      post = FactoryBot.create(:job, company: 'plus company', application_link: 'http://www.google.com', position: 'coder')
+      delete "/api/v1/jobs/#{post.id}"
 
       expect(response).to have_http_status(:no_content)
     end
