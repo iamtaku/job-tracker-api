@@ -27,7 +27,7 @@ class Api::V1::StepsController < ApplicationController
   def update
     step = Step.find(params[:id])
     if step.update(step_params)
-      render json: step, status: 200
+      render json: StepSerializer.new(step).serializable_hash.to_json, status: 200
     else
       render json: { error: step.errors.messages }, status: 422
     end

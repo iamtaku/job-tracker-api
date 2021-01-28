@@ -26,7 +26,7 @@ class Api::V1::JobsController < ApplicationController
   def update
     job = Job.find(params[:id])
     if job.update(job_params)
-      render json: job, status: 200
+      render json: JobSerializer.new(job).serializable_hash.to_json, status: 200
     else
       render json: { error: job.errors.messages }, status: 422
     end

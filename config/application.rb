@@ -39,7 +39,7 @@ module JobTrackerApi
         origins "*"
         resource "*",
           headers: :any,
-          methods: [:get, :post, :options, :head]
+          methods: [:get, :post, :options, :head, :patch]
       end
     end
   end
