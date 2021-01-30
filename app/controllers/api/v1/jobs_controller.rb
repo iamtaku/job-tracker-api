@@ -35,7 +35,7 @@ class Api::V1::JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:company, :position, :date, :application_link)
+    params.require(:job).permit(:company, :position, :date, :application_link, :status)
   end
 
   def options
