@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Job, :type => :model do
+  let(:user) { FactoryBot.create(:user, username: 'kaho99', password: 'password')}
   subject {
     Job.new(
-      company:'google',
-      position: 'front-end'
+      company: 'google',
+      position: 'front-end',
+      user: user
     )
   }
   it "is valid with valid attributes" do
