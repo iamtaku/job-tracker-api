@@ -15,7 +15,16 @@ describe "Jobs api", type: :request do
   describe "POST /jobs" do
     it 'returns the created job' do
       expect {
-        post '/api/v1/jobs', params: { job: { company: 'Google', position: 'frontend-dev', application_link: 'http://www.google.com' } }
+        post '/api/v1/jobs', params: {
+          job: {
+            company: 'Google',
+            position: 'frontend-dev',
+            application_link: 'http://www.google.com'
+           },
+          headers: {
+         "Authorization" => "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSJ9.M1vu6qDej7HzuSxcfbE6KAMekNUXB3EWtxwS0pg4UGg"
+         }
+        }
       }.to change { Job.count }.from(0).to(1)
       expect(response).to have_http_status(:created)
     end
