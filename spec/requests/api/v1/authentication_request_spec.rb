@@ -2,22 +2,26 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Authentications", type: :request do
  describe 'POST /authentication' do
-    it 'authenticates the client' do
-      post '/api/v1/authenticate', params: { username: 'kaho99', password: 'password' }
-      expect(response).to have_http_status(:created)
-      expect(JSON.parse(response.body)).to eq({
-        'token' => '123'
-      })
+  let(:user) { FactoryBot.create(:user, username: 'kaho99') }
 
-    end
-    it 'returns error when password is missing' do
-      post '/api/v1/authenticate', params: { username: 'kaho99' }
-      expect(response).to have_http_status(:unprocessable_entity)
-    end
+  it 'authenticates the client' do
+    post '/api/v1/authenticate', params: { username: user.username, password: 'password' }
+    expect(response).to have_http_status(:created)
+    expect(JSON.parse(response.body)).to eq(
+    {
+     'token' => AuthenticationTokenService.call(user.id)
+    }
+  )
 
-    it 'returns error when username is missing' do
-       post '/api/v1/authenticate', params: { username: 'kaho99'}
-      expect(response).to have_http_status(:unprocessable_entity)
-    end
   end
+  it 'returns error when password is missing' do
+    post '/api/v1/authenticate', params: { username: user.username }
+    expect(response).to have_http_status(:unprocessable_entity)
+  end
+
+  it 'returns error when username is missing' do
+    post '/api/v1/authenticate', params: { password: 'password' }
+    expect(response).to have_http_status(:unprocessable_entity)
+  end
+ end
 end

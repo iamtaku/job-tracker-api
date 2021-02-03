@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_102531) do
+ActiveRecord::Schema.define(version: 2021_02_03_073939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2021_01_24_102531) do
     t.string "status", default: "in-progress"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
   create_table "steps", force: :cascade do |t|
@@ -33,5 +35,13 @@ ActiveRecord::Schema.define(version: 2021_01_24_102531) do
     t.index ["job_id"], name: "index_steps_on_job_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "jobs", "users"
   add_foreign_key "steps", "jobs"
 end
