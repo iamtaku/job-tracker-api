@@ -10,32 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_073939) do
+ActiveRecord::Schema.define(version: 2021_02_03_083914) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "jobs", force: :cascade do |t|
+  create_table "jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "company"
     t.string "position"
     t.string "application_link"
     t.string "status", default: "in-progress"
+    t.uuid "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
-  create_table "steps", force: :cascade do |t|
-    t.datetime "date", default: "2021-01-24 00:00:00"
-    t.string "status", default: "in-progress"
-    t.bigint "job_id", null: false
+  create_table "steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "date", default: "2021-02-03 00:00:00"
+    t.string "status"
+    t.uuid "job_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["job_id"], name: "index_steps_on_job_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
