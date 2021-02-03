@@ -1,4 +1,7 @@
 class Api::V1::JobsController < ApplicationController
+  include ActionController::HttpAuthentication::Token
+  before_action :authenticate_user
+
   def index
     @jobs = Job.all
     # render json: @jobs, status: 200
@@ -33,7 +36,10 @@ class Api::V1::JobsController < ApplicationController
   end
 
   private
-
+  def authenticate_user
+    # Authorization: Bearer <token>
+    token, _options = token_and_options(request)
+  end
   def job_params
     params.require(:job).permit(:company, :position, :date, :application_link, :status)
   end

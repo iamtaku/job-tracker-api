@@ -13,7 +13,7 @@ describe "Jobs api", type: :request do
   describe "POST /jobs" do
     it 'returns the created job' do
       expect {
-        post '/api/v1/jobs', params: {job: {company: 'Google', position: 'frontend-dev', application_link: 'http://www.google.com'}}
+        post '/api/v1/jobs', params: { job: { company: 'Google', position: 'frontend-dev', application_link: 'http://www.google.com' } }
       }.to change { Job.count }.from(0).to(1)
       expect(response).to have_http_status(:created)
     end
@@ -40,7 +40,7 @@ describe "Jobs api", type: :request do
       }
 
       expect(response.status).to eq(200)
-      expect(response.body).to include('wework', 'react dev','https://www.wantedly.com/companies/wework3')
+      expect(response.body).to include('wework', 'react dev', 'https://www.wantedly.com/companies/wework3')
     end
 
   end
