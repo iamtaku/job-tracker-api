@@ -1,7 +1,10 @@
+require 'pry-byebug'
+
 class Api::V1::JobsController < ApplicationController
+  before_action :authenticate_user
+
   def index
-    @jobs = Job.all
-    # render json: @jobs, status: 200
+    @jobs = @user.jobs.all
     render json: JobSerializer.new(@jobs).serializable_hash.to_json
   end
 
@@ -35,7 +38,7 @@ class Api::V1::JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:company, :position, :date, :application_link, :status)
+    params.require(:job).permit(:company, :position, :date, :application_link, :status, :user_id)
   end
 
   def options

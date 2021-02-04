@@ -5,6 +5,7 @@ Rails.application.routes.draw do
         resources :steps, only: [:create]
       end
       resources :steps, only: [:destroy, :update, :show]
+      post 'authenticate', to: 'authentication#create'
     end
   end
 
