@@ -4,13 +4,12 @@ class ApplicationController < ActionController::API
 
   private
 
-    def authenticate_user
+  def authenticate_user
     # Authorization: Bearer <token>
     token, _options = token_and_options(request)
     user_id = AuthenticationTokenService.decode(token)
 
     @user = User.find(user_id)
-
   end
 
   def authentication_error
