@@ -1,9 +1,7 @@
 require 'pry-byebug'
 
 class Api::V1::JobsController < ApplicationController
-  include ActionController::HttpAuthentication::Token
   before_action :authenticate_user
-  # rescue_from JWT::VerificationError, JWT::DecodeError, ActiveRecord::RecordNotFound, with: :authentication_error
 
   def index
     @jobs = @user.jobs.all
@@ -38,23 +36,6 @@ class Api::V1::JobsController < ApplicationController
   end
 
   private
-
-  def authenticate_user
-    # Authorization: Bearer <token>
-    # p request
-    token, _options = token_and_options(request)
-    user_id = AuthenticationTokenService.decode(token)
-    # rescue JWT::VerificationError, JWT::DecodeError
-    # render json: status: :unauthorized
-    @user = User.find(user_id)
-    # rescue ActiveRecord::RecordNotFound
-    # render status: :unauthorized
-
-  end
-
-  def authentication_error
-    render status: :unauthorized
-  end
 
   def job_params
     params.require(:job).permit(:company, :position, :date, :application_link, :status, :user_id)
