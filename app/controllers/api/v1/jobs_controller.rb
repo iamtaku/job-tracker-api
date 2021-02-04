@@ -1,5 +1,3 @@
-require 'pry-byebug'
-
 class Api::V1::JobsController < ApplicationController
   before_action :authenticate_user
 
