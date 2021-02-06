@@ -4,6 +4,10 @@ class ApplicationController < ActionController::API
 
   private
 
+  def user
+    @user ||= User.find_by(username: params.require(:username))
+  end
+
   def authenticate_user
     # Authorization: Bearer <token>
     token, _options = token_and_options(request)

@@ -8,6 +8,7 @@ class Api::V1::JobsController < ApplicationController
 
   def create
     job = Job.new(job_params)
+    job.user = user
     if job.save
       render json: JobSerializer.new(job).serializable_hash.to_json, status: 201
     else

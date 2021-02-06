@@ -13,6 +13,7 @@ class Api::V1::AuthenticationController < ApplicationController
   private
   def user
     @user ||= User.find_by(username: params.require(:username))
+
   end
 
   def parameter_missing(error)
