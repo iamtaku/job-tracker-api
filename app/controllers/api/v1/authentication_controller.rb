@@ -11,10 +11,6 @@ class Api::V1::AuthenticationController < ApplicationController
   end
 
   private
-  def user
-    @user ||= User.find_by(username: params.require(:username))
-
-  end
 
   def parameter_missing(error)
     render json: { error: error.message }, status: :unprocessable_entity
